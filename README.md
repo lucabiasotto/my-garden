@@ -1,7 +1,7 @@
 # myGarden
 Raspberry controlled irrigation system.
 
-##Raspberry initial setup
+## Raspberry initial setup
 * Download lite version of Raspbian
 * Use Fetcher to write the ISO image on the SD Card
 * Create 2 file on the SSD root:
@@ -19,7 +19,7 @@ psk=" wifi password"
 
 ```
 
-##Install NodeJS and setup the rasp location
+## Install NodeJS and setup the rasp location
 * Connect in ssh to the rasp and configure it
 ```
 $ sudo cp /usr/share/zoneinfo/Europe/Rome /etc/localtime
@@ -54,9 +54,7 @@ $ node install
 ```
 
 ## Create a startup service
-Create a new service
-
-$sudo nano /lib/systemd/system/mygarden.service
+Create a new service `$sudo nano /lib/systemd/system/mygarden.service`
 
 ```
 [Unit]
