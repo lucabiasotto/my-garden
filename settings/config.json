@@ -1,0 +1,6 @@
+{
+  "DB_VERSION": 1,
+  "SCHEDULER_ENABLE": "Y",
+  "SCHEDULER_TIME": "17:34",
+  "SCHEDULER_IN_PROGRESS": false
+}

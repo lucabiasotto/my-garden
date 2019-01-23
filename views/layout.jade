@@ -1,0 +1,33 @@
+doctype html
+html
+	head
+		block head
+			block title
+				title MyGarden
+			block meta
+				meta(name='description', content='')
+				meta(name='keywords', content='')
+				meta(charset="utf-8")
+				meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+
+			link(rel='stylesheet', href='/css/bootstrap.min.css')
+			link(rel='stylesheet', href='/fontawesome-free-5.4.2-web/css/all.css')
+			link(rel='stylesheet', href='/css/style.css')
+			link(rel='stylesheet', href='/css/tempusdominus-bootstrap-4.min.css')
+			link(rel='stylesheet', href='/css/owfont-regular.min.css')
+			link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto")
+			jquery-3.3.1.min.js
+			script(src='/scripts/jquery-3.3.1.min.js')
+			script(src='/scripts/bootstrap.bundle.min.js')
+			script(src='/scripts/moment.js')
+			script(src='/scripts/tempusdominus-bootstrap-4.min.js')
+			| <style>
+			| 
+			| </style>
+
+	body
+		include header
+
+		block content
+
+		include footer

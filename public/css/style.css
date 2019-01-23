@@ -1,0 +1,36 @@
+body {
+    margin-top: 60px;
+    background-color: #f3f3f4;
+    color: #676a6c;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 100;
+}
+
+.bg-dark {
+    background-color: #2f4050!important;
+}
+
+.badge{
+    font-size: 100%;
+}
+
+.card-header{
+    background-color: #FFF;
+}
+
+.mygarden-center-verticaly{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.mygarden-index-owf{
+    font-size: 60pt;
+}
+
+.mygarden-save-cheduler{
+    margin-left: 10px;
+    min-width: 70px;
+}

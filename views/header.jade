@@ -1,0 +1,21 @@
+script.
+	$( document ).ready(function() {
+		var activeItem = window.location.pathname.replace("/", "");
+		if(!activeItem){
+			activeItem = "home";
+		}
+		$('#' + activeItem).addClass('active').append(" <span class='sr-only'>(current)></span>");
+	});
+
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+	a.navbar-brand(href='/') MyGarden
+	button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+		span.navbar-toggler-icon
+	#navbarNav.collapse.navbar-collapse
+		ul.navbar-nav
+			li#home.nav-item
+				a.nav-link(href='/') Stato impianto 
+			li#settings.nav-item
+				a.nav-link(href='/settings') Impostazioni
+			li#about.nav-item
+				a.nav-link(href='#') About

@@ -1,0 +1,94 @@
+extends layout
+
+block content
+	script.
+		var areaBtnClick = function(id, newActive) {
+			console.log('id: ' + id + " newStatus: " + newActive);
+
+			var args ={
+				id : id,
+				active : newActive
+			};
+
+			$.post("/irrigateArea", args, function( data ) {
+				var result = JSON.parse(data);
+				location.reload();
+			});
+		}
+
+	div.container
+		
+		br
+		.row.row-eq-height
+			.col-lg-6
+				.card
+					h5.card-header San Stino di livenza
+					.card-body
+							if !weatherInfo || !weatherInfo.main || !weatherInfo.weather[0]
+								p.card-text Dati metereologici non disponibili
+							else
+								.row
+									.col-6
+										small Massima #{weatherInfo.main.temp_max}°C Minima #{weatherInfo.main.temp_min}°C
+										h1 #{parseInt(weatherInfo.main.temp)}°C
+									.col-6
+										.row
+											.col-lg-6
+												|<i class="owf owf-#{weatherInfo.weather[0].id}-d mygarden-index-owf"></i>
+											.col-lg-6.mygarden-center-verticaly
+												p.card-text #{weatherInfo.weather[0].main}
+			.col-md-12.d-lg-none &nbsp;
+			.col-lg-6
+				.card
+					h5.card-header Stato dell'impianto
+					.card-body
+						p.card-text L'avvio automatico dell'impianto è 
+							if schedulerEnable == 'Y'
+								span.badge.badge-success attivato
+								span .
+								br
+								br
+								if schedulerInProgress
+									span.badge.badge-info Irrigazione in corso
+									span .
+								else
+									span La prossima irrigazione è prevista per le 
+									span.badge.badge-info #{schedulerTime}
+									span .
+							else
+								span.badge.badge-danger disattivato
+								span .
+		br
+		.row
+			.col-12
+				.card
+					h5.card-header Controllo Manuale
+					.card-body
+						p.card-text Nella griglia sottostante puoi visualizzare lo stato dell'impiato, se lo desideri puoi accendere e spengere manualmente l'irrigazione di una zona.
+						table.table.table-striped
+							thead
+								tr
+								th(scope='col') #   
+								th(scope='col') Zona
+								th(scope='col') 
+							tbody
+								each area, i in areas
+									tr
+									th.align-middle(scope='row')=area.id
+									td.align-middle=area.name
+									td.align-middle
+										if area.enable!="Y"
+											button.btn.btn-secondary(type="button", disabled)
+												i.fas.fa-play
+										else if area.active == "Y"
+											button.btn.btn-danger(type="button", onclick="areaBtnClick(#{area.id}, 'N')")
+												i.fas.fa-stop
+										else
+											button.btn.btn-success(type="button", onclick="areaBtnClick(#{area.id}, 'Y')")
+												i.fas.fa-play
+	
+						
+
+							
+					
+				

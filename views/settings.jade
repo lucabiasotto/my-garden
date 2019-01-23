@@ -1,0 +1,199 @@
+extends layout
+
+block content
+	script.
+		$(function () {
+
+			function updateTimeEnable(){
+				if($('#schedulerEnable').checked){
+					$("#schedulerTime").prop('disabled', false);
+				}else{
+					$("#schedulerTime").prop('disabled', true);
+				}
+			}
+			
+			function showSaveBtn(){
+				if($('#schedulerEnable').is(':checked')){
+					$("#schedulerSaveBtn").removeClass("invisible");
+				}
+			}
+
+			function hideSaveBtn(){
+				$("#schedulerSaveBtn").addClass("invisible");
+			}
+
+			var updateSchdeuler = function(args, callback){
+				$.post("/settings/updateScheduler", args, function( data ) {
+					var result = JSON.parse(data);
+
+					if(callback){
+						callback(result);
+					}
+				});
+			}
+
+			//cambio check schedulatore
+			$('#schedulerEnable').change(function() {
+				if(this.checked) {
+					var returnVal = confirm("Sicuro di voler attivare la programmazione autmatica");
+					$(this).prop("checked", returnVal);
+				}
+
+				if(this.checked) {
+					$("#schedulerTime").prop('disabled', false);
+				}else{
+					$("#schedulerTime").prop('disabled', true);
+					hideSaveBtn();
+				}
+
+				var args = {
+					enable : this.checked ? "Y" : "N"
+				}
+				updateSchdeuler(args);
+			});
+
+
+			//impostazioni timepicker
+			$('#schedulerTimepicker').datetimepicker({
+				format: 'HH:mm',
+				locale : 'it'
+			});
+			$("#schedulerTime").change(function(){
+				$("#schedulerSaveBtn").show();
+			});
+			$('#schedulerTimepicker').click(function() {
+				showSaveBtn();
+			});
+
+
+			//click bottone salva schedulatore
+			$('#schedulerSaveBtn').click(function() {
+				var args = {
+					time : $("#schedulerTime").val()
+				}
+				updateSchdeuler(args, (response) =>{
+					if(response && response.success){
+						hideSaveBtn();
+					}
+				});
+			});
+
+			//click bottone avvia subito schedulatore
+			$('#schedulerStartNowBtn').click(function() {
+				$.get("/settings/startScheduler", null, function( data ) {
+					var result = JSON.parse(data);
+
+					if(!result.success){
+						alert("Impianto già in funzione");
+					}else{
+						document.location.href="/";
+					}
+				});
+			});
+
+			
+		});
+		var areaBtnClick = function(id, newActive) {
+
+			$.get("/settings/area/"+id, null, function( data ) {
+				var result = JSON.parse(data);
+				$('#areaId').val(id);
+				$('#areaName').val(result.name);
+				$('#areaDuration').val(result.duration);
+				$('#areaEnable').prop('checked', result.enable === 'Y');
+				$('#areaDetailModal').modal('show');
+			});
+		}
+
+		var updateArea = function(){
+			debugger;
+		}
+
+
+	div.container
+
+		br
+		.card
+			h5.card-header Programmazione
+			.card-body
+				p.card-text Scegli se attivare l'avvio automatico dell'impianto d'irrigazione e l'orario di accensione.
+				div
+					.form-check
+						if schedulerEnable == 'Y'
+							input#schedulerEnable.form-check-input(type="checkbox", name="schedulerEnable", value="Y" checked)
+						else
+							input#schedulerEnable.form-check-input(type="checkbox", name="schedulerEnable", value="Y")
+						label.form-check-label(for="schedulerEnable") Attiva avvio automatico
+						small.form-text.text-muted Se selezionato l'impianto verrà attivato automaticamente all'ora indicata.
+					
+					br
+
+					.form-group
+							#schedulerTimepicker.input-group.date.col-md-5.col-lg-3(data-target-input="nearest" style="padding-left: 0px;")
+								if schedulerEnable == 'Y'
+									input#schedulerTime.form-control.datetimepicker-input(type="text", data-target="#schedulerTimepicker", value="#{schedulerTime}")
+								else
+									input#schedulerTime.form-control.datetimepicker-input(type="text", data-target="#schedulerTimepicker", value="#{schedulerTime}" disabled)
+								.input-group-append(data-target="#schedulerTimepicker" data-toggle="datetimepicker")
+									.input-group-text
+										i.fas.fa-clock
+								button#schedulerSaveBtn.btn.btn-primary.mygarden-save-cheduler.invisible(type="button") Salva
+				
+				button#schedulerStartNowBtn.btn.btn-primary(type="button") Avvia subito
+		br
+		.card
+			h5.card-header Configurazione zone
+			.card-body
+				p.card-text Usa la griglia sottostante per configurare le zone del tuo impianto d'irrigazione
+
+				table.table.table-striped
+					thead
+						tr
+						th(scope='col') #	 
+						th(scope='col') Zona
+						th(scope='col') Durata (min)
+						th(scope='col') Stato zona
+						th(scope='col') 
+					tbody
+						each area, i in areas
+							tr
+							th.align-middle(scope='row')=area.id
+							td.align-middle=area.name
+							td.align-middle=area.duration
+							td.align-middle
+								if area.enable == "Y"
+									span.badge.badge-success On
+								else
+									span.badge.badge-danger Off
+							td.align-middle
+								button.btn.btn-primary(type="button", onclick="areaBtnClick(#{area.id}, 'F')")
+									i.fas.fa-pen
+
+		#areaDetailModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='areaDetailModalLabel', aria-hidden='true')
+				.modal-dialog(role='document')
+						.modal-content
+							.modal-header
+								h5#areaDetailModalLabel.modal-title Configura zona
+								button.close(type='button', data-dismiss='modal', aria-label='Close')
+									span(aria-hidden='true') &times;
+							.modal-body
+								form#areaForm(name="updateArea", method="post", action="/settings/updateArea")
+									.form-group
+										label(for="areaId") Numero zona
+										input#areaId.form-control(type="text" readonly, name="id")
+									.form-group
+										label(for="areaName") Nome zona
+										input#areaName.form-control(type="text", name="name")
+									.form-group
+										label(for="areaDuration") Durata irrigazione (minuti)
+										input#areaDuration.form-control(type="number", name="duration")
+									.form-check
+										input#areaEnable.form-check-input(type="checkbox", name="enable", value="Y")
+										label.form-check-label(for="areaEnable") Zona attiva
+										small.form-text.text-muted Se non selezionato la zona verrà considerata disattiva e non sarà possibile irrigarla
+
+
+							.modal-footer
+								button.btn.btn-secondary(type='button', data-dismiss='modal') Chiudi
+								button.btn.btn-primary(type='type="submit' form="areaForm") Salva
+
