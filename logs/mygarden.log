@@ -40,3 +40,11 @@ undefined
 undefined
 undefined
 undefined
+{"message":{"0":"GPIO module not available"},"level":"error","timestamp":"2019-01-23T20:07:48.062Z"}
+{"message":{"0":"Connecting to database: ./db/mygarden.db"},"level":"info","timestamp":"2019-01-23T20:07:48.066Z"}
+{"message":{"0":"Rescheduling irrigation..."},"level":"info","timestamp":"2019-01-23T20:07:48.073Z"}
+{"message":{"0":"Next irrigation at: 17:34"},"level":"info","timestamp":"2019-01-23T20:07:48.074Z"}
+{"message":{"0":"Update weather information"},"level":"info","timestamp":"2019-01-23T20:07:48.084Z"}
+{"message":{"0":"Database conntected!"},"level":"info","timestamp":"2019-01-23T20:07:48.098Z"}
+{"message":{"0":"Areas alredy exists."},"level":"info","timestamp":"2019-01-23T20:07:48.120Z"}
+{"message":{"0":"Weather information body: ","1":"{\"coord\":{\"lon\":12.7,\"lat\":45.72},\"weather\":[{\"id\":701,\"main\":\"Mist\",\"description\":\"mist\",\"icon\":\"50n\"}],\"base\":\"stations\",\"main\":{\"temp\":1.58,\"pressure\":997,\"humidity\":100,\"temp_min\":1,\"temp_max\":2},\"visibility\":10000,\"wind\":{\"speed\":3.1,\"deg\":40},\"clouds\":{\"all\":75},\"dt\":1548273000,\"sys\":{\"type\":1,\"id\":6762,\"message\":0.0037,\"country\":\"IT\",\"sunrise\":1548225594,\"sunset\":1548259373},\"id\":6536662,\"name\":\"Santo Stino di Livenza\",\"cod\":200}"},"level":"info","timestamp":"2019-01-23T20:07:48.198Z"}

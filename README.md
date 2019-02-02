@@ -1,5 +1,21 @@
 # myGarden
-Raspberry controlled irrigation system.
+Raspberry Pi and NodeJS controlled irrigation system.
+The system has a main solenoid valve to open the irrigation system and 7 solenoid valves to control the 7 zones of the system.
+
+
+## Hardwware
+* Raspberry Pi Zero W (wireless) & Zero Essentials Kit
+** https://amzn.to/2UuUUwq
+* Relay low level trigger
+** https://amzn.to/2Rxr3S3
+* Cables
+** https://amzn.to/2UxRWal
+* 8 Solenoid valve
+
+
+## Conectione scheme
+![Alt text](images/schema.jpg?raw=true "Scheme")
+Note: the Relay is low level trigger, so the relay board is activated via software through GPIO11.
 
 ## Raspberry initial setup
 * Download lite version of Raspbian
