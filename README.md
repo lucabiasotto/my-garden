@@ -2,7 +2,6 @@
 Raspberry Pi and NodeJS controlled irrigation system.
 The system has a main solenoid valve to open the irrigation system and 7 solenoid valves to control the 7 zones of the system.
 
-
 ## Hardwware
 * Raspberry Pi Zero W (wireless) & Zero Essentials Kit
 ** https://amzn.to/2UuUUwq
