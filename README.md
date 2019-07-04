@@ -2,9 +2,9 @@
 Raspberry Pi and NodeJS controlled irrigation system.
 The system has a main electric hydraulic valve valve to open the irrigation system and 7 electric hydraulic valve to control the 7 zones of the system.
 
-![Alt text](images/mockuo.jpg?raw=true "Scheme")
+![Alt text](images/mockup.jpg?raw=true "Scheme")
 
-##Features
+## Features
 * Manual irrigation
 * Automatic and configurable irrigation
 * Scheduled irrigation
