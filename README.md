@@ -24,6 +24,7 @@ The system has a main electric hydraulic valve valve to open the irrigation syst
 ## Conectione scheme
 ![Alt text](images/schema.jpg?raw=true "Scheme")
 Note: the Relay is low level trigger, so the relay board is activated via software through GPIO11.
+![Alt text](images/irrigazione.jpg?raw=true "Scheme")
 
 
 ## Raspberry initial setup
