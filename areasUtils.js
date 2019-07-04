@@ -136,6 +136,26 @@ function updateArea(db, area, callback) {
     });
 }
 
+
+function turnOffAllArea(db, callback) {
+    var queryParams = [];
+    var updateQuery = "UPDATE areas SET active = 'N' ";
+
+    closeMasterGPIO();
+    powerReleCard(false);
+
+    db.run(updateQuery, queryParams, function (err) {
+        if (err) {
+            logger.info(err.message);
+        }
+
+        if (callback) {
+            callback(err);
+        }
+
+    });
+}
+
 /**
  * Dato l'id ritorna l'area
  * @param {*} db 
@@ -180,7 +200,7 @@ function rescheduleIrrigation(dbUtils) {
             return;
         }
 
-        logger.info("Next irrigation at: " + scheulerTime);
+        logger.info("Next irrigation at: " + scheulerTime + " now is: " + new Date());
 
         var rule = new schedule.RecurrenceRule();
         //rule.dayOfWeek = [1, 2, 3, 4, 5];
@@ -291,7 +311,7 @@ function closeGPIOForArea(areaId) {
  * Apre l'elettrovalvola principale
  */
 function openMasterGPIO() {
-    console.warn("%s Open master GPIO ", dateFormat(new Date(), "hh:MM:ss"));
+    logger.info("%s Open master GPIO ", dateFormat(new Date(), "hh:MM:ss"));
     ELETTROVALVOLE.MASTER.writeSync(GPIO_OFF);
 }
 
@@ -304,7 +324,8 @@ function closeMasterGPIO() {
 }
 
 /**
- * 
+ * Alimenta la scheda relè e mette in tensione tutte i relè
+ * NB: i relè sono chiusi quando non passa corrente
  * @param {*} power  true accessa, false spenta
  */function powerReleCard(power){
      ELETTROVALVOLE.MASTER.writeSync(power ? GPIO_ON : GPIO_OFF);
@@ -321,6 +342,7 @@ function closeMasterGPIO() {
 exports.inizializeAreas = inizializeAreas;
 exports.getAllAreas = getAllAreas;
 exports.getAreaById = getAreaById;
+exports.turnOffAllArea = turnOffAllArea;
 exports.updateArea = updateArea;
 exports.rescheduleIrrigation = rescheduleIrrigation;
 exports.startIrrigation = startIrrigation;

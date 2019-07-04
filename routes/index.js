@@ -13,12 +13,12 @@ router.get('/', function (req, res, next) {
     var schedulerInProgress = dbUtils.getAppParameter(consts.PARAM_SCHEDULER_IN_PROGRESS);
     var schedulerTime = dbUtils.getAppParameter(consts.PARAM_SCHEDULER_TIME) ? dbUtils.getAppParameter(consts.PARAM_SCHEDULER_TIME) : "";
     areasUtils.getAllAreas(dbUtils.db, (rows) => {
-        var pageArgs ={
-            areas : rows,
-            weatherInfo : weatherUtils.info,
-            schedulerEnable : schedulerEnable,
-            schedulerTime : schedulerTime,
-            schedulerInProgress : schedulerInProgress
+        var pageArgs = {
+            areas: rows,
+            weatherInfo: weatherUtils.info,
+            schedulerEnable: schedulerEnable,
+            schedulerTime: schedulerTime,
+            schedulerInProgress: schedulerInProgress
         };
 
         res.render('index', pageArgs);
@@ -28,34 +28,37 @@ router.get('/', function (req, res, next) {
 router.post('/irrigateArea', function (req, res) {
 
     var area = {
-        id : req.body.id,
-        active : req.body.active
+        id: req.body.id,
+        active: req.body.active
     }
 
-    areasUtils.updateArea(dbUtils.db, area, (err) => {
+    areasUtils.turnOffAllArea(dbUtils.db, (err) => {
 
-        if(!err){
+        areasUtils.updateArea(dbUtils.db, area, (err) => {
 
-            if(req.body.active == 'Y'){
-                areasUtils.powerReleCard(true);
-                areasUtils.openMasterGPIO();
-                areasUtils.openGPIOForArea(area.id);
-            }else{
-                dbUtils.setAppParameter(consts.PARAM_SCHEDULER_IN_PROGRESS, false);
-                areasUtils.closeMasterGPIO();
-                areasUtils.closeGPIOForArea(area.id);
-                areasUtils.powerReleCard(false);
+            if (!err) {
+
+                if (req.body.active == 'Y') {
+                    areasUtils.powerReleCard(true);
+                    areasUtils.openMasterGPIO();
+                    areasUtils.openGPIOForArea(area.id);
+                } else {
+                    dbUtils.setAppParameter(consts.PARAM_SCHEDULER_IN_PROGRESS, false);
+                    areasUtils.closeMasterGPIO();
+                    areasUtils.closeGPIOForArea(area.id);
+                    areasUtils.powerReleCard(false);
+                }
             }
-        }
 
 
-        var result = {
-            success: err == null,
-            error: err == null ? err : err.message
-        };
+            var result = {
+                success: err == null,
+                error: err == null ? err : err.message
+            };
 
-        //res.redirect("/"); non funziona
-        res.send(JSON.stringify(result));
+            //res.redirect("/"); non funziona
+            res.send(JSON.stringify(result));
+        });
     });
 });
 

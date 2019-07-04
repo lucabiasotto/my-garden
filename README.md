@@ -1,6 +1,15 @@
 # myGarden
 Raspberry Pi and NodeJS controlled irrigation system.
-The system has a main solenoid valve to open the irrigation system and 7 solenoid valves to control the 7 zones of the system.
+The system has a main electric hydraulic valve valve to open the irrigation system and 7 electric hydraulic valve to control the 7 zones of the system.
+
+![Alt text](images/mockuo.jpg?raw=true "Scheme")
+
+##Features
+* Manual irrigation
+* Automatic and configurable irrigation
+* Scheduled irrigation
+* Not irrigate if it rains
+* Log event on Raspberry Micro SD
 
 ## Hardwware
 * Raspberry Pi Zero W (wireless) & Zero Essentials Kit
@@ -15,6 +24,7 @@ The system has a main solenoid valve to open the irrigation system and 7 solenoi
 ## Conectione scheme
 ![Alt text](images/schema.jpg?raw=true "Scheme")
 Note: the Relay is low level trigger, so the relay board is activated via software through GPIO11.
+
 
 ## Raspberry initial setup
 * Download lite version of Raspbian
@@ -54,6 +64,15 @@ scp myGarden_path/* pi@192.168.1.102:/tmp/
 
 move the project where you prefer
 
+```
+## Add Weather information
+Open class weatherUtils.js and replace this information:
+
+```
+var API_KEY = "YOUR_KEY";
+var API_KEY_NAME = "YOUR_API_NAME";
+var LATTITUDE = "00.00000"
+var LONGITUDE = "00.00000";
 ```
 
 ## Build the project on the raps
