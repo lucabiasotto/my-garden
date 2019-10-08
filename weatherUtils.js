@@ -1,10 +1,10 @@
 var request = require('request');
 var logger = require('./logger');
 
-var API_KEY = "YOUR_KEY";
-var API_KEY_NAME = "YOUR_API_NAME";
-var LATTITUDE = "00.00000"
-var LONGITUDE = "00.00000";
+var API_KEY = "1b3124c9983b5db6e6344b26aca89812";
+var API_KEY_NAME = "mygarden";
+var LATTITUDE = "45.724208"
+var LONGITUDE = "12.699902";
 
 var info;
 
